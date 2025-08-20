@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Student Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <header><h2>Student Dashboard</h2></header>
+  <div id="studentDetails"></div>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<script>
+const studentDetails = document.getElementById("studentDetails");
+const currentStudent = JSON.parse(localStorage.getItem("currentStudent"));
+
+if(currentStudent){
+  const percent = ((currentStudent.attended/currentStudent.total)*100).toFixed(2);
+  studentDetails.innerHTML = `
+    <h3>Welcome, ${currentStudent.name}</h3>
+    <p><b>Roll No:</b> ${currentStudent.roll}</p>
+    <p><b>Course:</b> ${currentStudent.course}</p>
+    <p><b>Classes Attended:</b> ${currentStudent.attended}</p>
+    <p><b>Total Classes:</b> ${currentStudent.total}</p>
+    <p><b>Attendance %:</b> ${percent}%</p>
+  `;
+} else {
+  alert("No student data found!");
+  window.location.href = "login.html";
+}
+
+function logout(){
+  localStorage.removeItem("currentStudent");
+  window.location.href = "login.html";
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Teacher Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+  <header><h2>Teacher Dashboard</h2></header>
+  <form id="studentForm">
+    <input type="text" id="name" placeholder="Student Name" required>
+    <input type="text" id="roll" placeholder="Roll Number" required>
+    <input type="text" id="course" placeholder="Course" required>
+    <input type="number" id="attended" placeholder="Classes Attended" min="0" required>
+    <input type="number" id="total" placeholder="Total Classes" min="1" required>
+    <button type="submit">Add Student</button>
+  </form>
+
+  <h2>All Students</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Roll No</th>
+        <th>Name</th>
+        <th>Course</th>
+        <th>Classes Attended</th>
+        <th>Total Classes</th>
+        <th>Attendance %</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="studentTable"></tbody>
+  </table>
+  <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<script src="teacher.js"></script>
+</body>
+</html>
