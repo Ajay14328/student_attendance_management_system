@@ -1,0 +1,165 @@
+/* Global Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  color: #333;
+}
+
+/* Login Page */
+#loginPage {
+  width: 400px;
+  background: rgba(255,255,255,0.95);
+  padding: 40px 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+  text-align: center;
+  animation: fadeIn 1s ease-in-out;
+}
+
+#loginPage h2 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+input, select, button {
+  width: 80%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+button {
+  background: #3498db;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Container for Teacher & Student Pages */
+.container {
+  width: 85%;
+  max-width: 1000px;
+  background: rgba(255,255,255,0.95);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+  margin: 20px auto;
+  animation: fadeIn 1s ease-in-out;
+}
+
+header {
+  background: rgba(44,62,80,0.9);
+  color:white;
+  text-align:center;
+  padding:20px;
+  border-radius: 10px 10px 0 0;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* Table Styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+  transition: background 0.3s;
+}
+
+th {
+  background: #3498db;
+  color: white;
+}
+
+td:hover {
+  background: #f1f1f1;
+}
+
+/* Buttons inside table */
+.edit-btn, .delete-btn {
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.edit-btn { background: #27ae60; }
+.edit-btn:hover { background: #1e8449; }
+
+.delete-btn { background: #e74c3c; }
+.delete-btn:hover { background: #c0392b; }
+
+.logout-btn {
+  background:#e67e22;
+  color:white;
+  padding:10px 20px;
+  border-radius:8px;
+  margin-top:15px;
+  cursor:pointer;
+  transition: 0.3s;
+}
+
+.logout-btn:hover { background: #cf6c0d; }
+
+/* Student Details Card */
+#studentDetails {
+  background: #f0f8ff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+#studentDetails:hover {
+  background: #e6f2ff;
+  transform: scale(1.02);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {opacity:0; transform: translateY(-20px);}
+  to {opacity:1; transform: translateY(0);}
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  #loginPage, .container {
+    width: 90%;
+    padding: 20px;
+  }
+
+  input, select, button {
+    width: 90%;
+  }
+}
