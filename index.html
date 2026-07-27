@@ -22,25 +22,38 @@
 
 <script>
 const loginForm = document.getElementById("loginForm");
-const teacherUser = "teacher";
-const teacherPass = "1234";
+const API_BASE = window.location.protocol === "file:" ? "http://localhost:3000" : "";
 
-loginForm.addEventListener("submit", e=>{
+loginForm.addEventListener("submit", async e => {
   e.preventDefault();
   const role = document.getElementById("role").value;
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
-  const students = JSON.parse(localStorage.getItem("students")) || [];
 
-  if(role==="teacher" && username===teacherUser && password===teacherPass){
-    window.location.href = "teacher.html";
-  } else if(role==="student"){
-    const s = students.find(s=>s.name===username && s.roll===password);
-    if(s){
-      localStorage.setItem("currentStudent", JSON.stringify(s));
-      window.location.href = "student.html";
-    } else alert("Invalid Student login!");
-  } else alert("Invalid login!");
+  try {
+    const res = await fetch(`${API_BASE}/api/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ role, username, password })
+    });
+
+    const data = await res.json();
+
+    if (res.ok && data.success) {
+      if (data.role === "teacher") {
+        window.location.href = "teacher.html";
+      } else if (data.role === "student") {
+        sessionStorage.setItem("currentStudentRoll", data.student.roll);
+        localStorage.setItem("currentStudent", JSON.stringify(data.student));
+        window.location.href = "student.html";
+      }
+    } else {
+      alert(data.error || "Login failed!");
+    }
+  } catch (err) {
+    console.error("Login error:", err);
+    alert("Unable to connect to server. Please ensure backend is running.");
+  }
 });
 </script>
 </body>
