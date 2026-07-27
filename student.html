@@ -14,27 +14,60 @@
 
 <script>
 const studentDetails = document.getElementById("studentDetails");
-const currentStudent = JSON.parse(localStorage.getItem("currentStudent"));
+const API_BASE = window.location.protocol === "file:" ? "http://localhost:3000" : "";
 
-if(currentStudent){
-  const percent = ((currentStudent.attended/currentStudent.total)*100).toFixed(2);
-  studentDetails.innerHTML = `
-    <h3>Welcome, ${currentStudent.name}</h3>
-    <p><b>Roll No:</b> ${currentStudent.roll}</p>
-    <p><b>Course:</b> ${currentStudent.course}</p>
-    <p><b>Classes Attended:</b> ${currentStudent.attended}</p>
-    <p><b>Total Classes:</b> ${currentStudent.total}</p>
-    <p><b>Attendance %:</b> ${percent}%</p>
-  `;
-} else {
-  alert("No student data found!");
-  window.location.href = "index.html";
+async function loadStudentData() {
+  const currentRoll = sessionStorage.getItem("currentStudentRoll") || 
+                      (JSON.parse(localStorage.getItem("currentStudent") || "{}")).roll;
+
+  if (!currentRoll) {
+    alert("No student session found. Please log in.");
+    window.location.href = "index.html";
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_BASE}/api/students/roll/${encodeURIComponent(currentRoll)}`);
+    if (res.ok) {
+      const student = await res.json();
+      const total = student.total > 0 ? student.total : 1;
+      const percent = ((student.attended / total) * 100).toFixed(2);
+      
+      studentDetails.innerHTML = `
+        <h3>Welcome, ${escapeHtml(student.name)}</h3>
+        <p><b>Roll No:</b> ${escapeHtml(student.roll)}</p>
+        <p><b>Course:</b> ${escapeHtml(student.course)}</p>
+        <p><b>Classes Attended:</b> ${student.attended}</p>
+        <p><b>Total Classes:</b> ${student.total}</p>
+        <p><b>Attendance %:</b> ${percent}%</p>
+      `;
+    } else {
+      alert("Student data not found on server.");
+      window.location.href = "index.html";
+    }
+  } catch (err) {
+    console.error("Error fetching student details:", err);
+    studentDetails.innerHTML = `<p style="color:red;">Error connecting to server. Please try again later.</p>`;
+  }
 }
 
-function logout(){
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function logout() {
+  sessionStorage.removeItem("currentStudentRoll");
   localStorage.removeItem("currentStudent");
   window.location.href = "index.html";
 }
+
+loadStudentData();
 </script>
 </body>
 </html>
